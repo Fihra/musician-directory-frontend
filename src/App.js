@@ -1,23 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import { useDropzone } from 'react-dropzone';
+import Search from './components/Search';
+import Dashboard from './components/Dashboard';
 
-function App() {
+const App = () => {
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+
+  // const files = acceptedFiles.map(file => {
+
+  // })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Musician Directory</h1>
+      {/* <form>
+        <input type="file" name="file"/>
+      </form> */}
+      {/* <section className="container">
+      <div {...getRootProps({className: 'dropzone'})}>
+        <input {...getInputProps()}/>
+        <p>Drag 'n drop some files here, or click to select files</p>
+      </div>
+      </section> */}
+      <Search/>
+      <Dashboard/>
     </div>
   );
 }
