@@ -12,36 +12,77 @@ import Instagram from '../assets/instagram.png';
 import BlankAvatar from '../assets/blank_avatar.png';
 import Website from '../assets/website.png';
 
+const socialMediaLinks = {
+    "Youtube": {
+        logo: Youtube,
+    },
+    "Twitter": {
+        logo: Twitter,
+    },
+    "Soundcloud": {
+        logo: Soundcloud,
+    },
+    "Twitch": {
+        logo: Twitch,
+    },
+    "Spotify": {
+        logo: Spotify,
+    },
+    "Bandcamp": {
+        logo: Bandcamp,
+    },
+    "Instagram": {
+        logo: Instagram,
+    },
+    "Website": {
+        logo: Website,
+    }
+}
+
+const mySocialMedia = {}
+
 const ProfileCard = (props) => {
     const [details, setDetails] = useState(null);
-
+    const [socialMedia, setSocialMedia] = useState(mySocialMedia)
     useEffect(() =>{
         setDetails(props.musician);
+
+        const {youtube, twitter, soundcloud, twitch, bandcamp, instagram, website} = props.musician;
+
+        setSocialMedia({
+            ...mySocialMedia,
+            "Youtube": youtube,
+            "Twitter": twitter,
+            "Soundcloud": soundcloud,
+            "Twitch": twitch,
+            "Bandcamp": bandcamp,
+            "Instagram": instagram,
+            "Website": website
+        })
+
+        // console.log(socialMeds);
     }, [])
-
-
-    const socialMediaLinks = {
-        "Youtube": Youtube,
-        "Twitter": Twitter,
-        "Soundcloud": Soundcloud,
-        "Twitch": Twitch,
-        "Spotify": Spotify,
-        "Bandcamp": Bandcamp,
-        "Instagram": Instagram,
-        "Website": Website
-    }
 
     const socialLink = () => {
         console.log("Hit Me")
     }
 
     const showSocialMedia = () => {
-        return Object.entries(socialMediaLinks).map(([key, value], i) => {
-            return <li key={i}><button onClick={socialLink}><img src={value} alt={key} /></button></li>
+        // return Object.entries(socialMediaLinks).map(([key, value], i) => {
+        //     return <li key={i}><a href={}><img src={value} alt={key} /></a></li>
+        // })
+        // console.log(socialMedia)
+        return Object.entries(socialMedia).map(([key, value], i) => {
+            if(value !== "N/A" || value !== ""){
+                return <li key={i}><a href={value}><img src={socialMediaLinks[key].logo} alt={key}/></a></li>
+            }
+
+            return console.log(key, value)
         })
+
     }
 
-    console.log(details);
+    // console.log(details);
 
     return(
         <div className="profile-container">
@@ -49,8 +90,8 @@ const ProfileCard = (props) => {
                 
                 <div className="name-detail">
                     {details === null ? <p>Name</p> : <p>{details.name}</p>}
-                    {details === null ? <p>Alias</p> : <p>{details.alias}</p>}
-                    {/* <p>Email</p> */}
+                    {details === null ? null : <p>{details.alias}</p>}
+                    {details === null ? null : <p>{details.email}</p>}
                 </div>
                 <div className="img-holder">
                     <img src={BlankAvatar} alt="Self"/>
@@ -65,7 +106,6 @@ const ProfileCard = (props) => {
                 <p> Audio Gear: {details === null ? null : details.audioGear }</p>
                 <p>Other Skills:</p>
                 <p>Misc:</p>
-                <p>Registered on Projects:</p>
             </div>
             
             <div className="sample-container">
