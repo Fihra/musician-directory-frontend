@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 //Social Media Buttons
 import Youtube from '../assets/youtube.png';
@@ -12,8 +12,14 @@ import Instagram from '../assets/instagram.png';
 import BlankAvatar from '../assets/blank_avatar.png';
 import Website from '../assets/website.png';
 
-const ProfileCard = () => {
-    
+const ProfileCard = (props) => {
+    const [details, setDetails] = useState(null);
+
+    useEffect(() =>{
+        setDetails(props.musician);
+    }, [])
+
+
     const socialMediaLinks = {
         "Youtube": Youtube,
         "Twitter": Twitter,
@@ -25,19 +31,25 @@ const ProfileCard = () => {
         "Website": Website
     }
 
+    const socialLink = () => {
+        console.log("Hit Me")
+    }
+
     const showSocialMedia = () => {
-        return Object.entries(socialMediaLinks).map(([key, value]) => {
-            return <li><img src={value} alt={key}/></li>
+        return Object.entries(socialMediaLinks).map(([key, value], i) => {
+            return <li key={i}><button onClick={socialLink}><img src={value} alt={key} /></button></li>
         })
     }
+
+    console.log(details);
 
     return(
         <div className="profile-container">
             <div className="profile-image">
                 
                 <div className="name-detail">
-                    <p>Name</p>
-                    <p>Alias</p>
+                    {details === null ? <p>Name</p> : <p>{details.name}</p>}
+                    {details === null ? <p>Alias</p> : <p>{details.alias}</p>}
                     {/* <p>Email</p> */}
                 </div>
                 <div className="img-holder">
@@ -47,10 +59,10 @@ const ProfileCard = () => {
             <button className="contact-btn"> Save to Contact Later</button>
             </div>
             <div className="all-detail">
-                <p>Instrument(s):</p>
+                <p>Instrument(s): {details === null ? null : details.instrument }</p>
                 <p>Voice Range:</p>
-                <p>Production Skills:</p>
-                <p> Audio Gear:</p>
+                <p>Production Skills:{details === null ? null : details.productionSkills }</p>
+                <p> Audio Gear: {details === null ? null : details.audioGear }</p>
                 <p>Other Skills:</p>
                 <p>Misc:</p>
                 <p>Registered on Projects:</p>
