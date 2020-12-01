@@ -39,7 +39,7 @@ const socialMediaLinks = {
     }
 }
 
-const mySocialMedia = {}
+const mySocialMedia = {};
 
 const ProfileCard = (props) => {
     const [details, setDetails] = useState(null);
@@ -59,30 +59,19 @@ const ProfileCard = (props) => {
             "Instagram": instagram,
             "Website": website
         })
-
-        // console.log(socialMeds);
+        console.log(details);
     }, [])
 
-    const socialLink = () => {
-        console.log("Hit Me")
-    }
-
     const showSocialMedia = () => {
-        // return Object.entries(socialMediaLinks).map(([key, value], i) => {
-        //     return <li key={i}><a href={}><img src={value} alt={key} /></a></li>
-        // })
-        // console.log(socialMedia)
         return Object.entries(socialMedia).map(([key, value], i) => {
             if(value !== "N/A" || value !== ""){
                 return <li key={i}><a href={value}><img src={socialMediaLinks[key].logo} alt={key}/></a></li>
             }
 
-            return console.log(key, value)
+            // return console.log(key, value)
         })
 
     }
-
-    // console.log(details);
 
     return(
         <div className="profile-container">
@@ -112,7 +101,7 @@ const ProfileCard = (props) => {
 
             <div className="samples">
                 <div className="sample-holder">
-                        Sample #1
+                        {details === null ? "Sample #1" : <iframe className="video-player" src={details.sample1} title="sample 1"/>}
                     </div>
                     <div className="sample-holder">
                         Sample #2

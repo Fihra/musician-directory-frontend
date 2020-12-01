@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfileCard from './ProfileCard';
+import Search from './Search';
 import axios from 'axios';
 
 const Dashboard = () => {
@@ -28,7 +29,7 @@ const Dashboard = () => {
     return(
 
         <div className="dashboard-container">
-            {/* <ProfileCard/> */}
+            <Search/>
             {showMusicians()}
         </div>
     )

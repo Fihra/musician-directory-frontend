@@ -37,6 +37,19 @@
   }
 }
 
+.side-buttons {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+}
+
+.side-buttons button {
+  height: 45px;
+  width: 75px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
 .search-container {
   height: 50px;
   width: 50%;
@@ -106,7 +119,7 @@
 }
 
 .sample-container {
-  width: 350px;
+  width: 420px;
   height: 300px;
   border: 1px solid red;
 }
@@ -116,9 +129,14 @@
 }
 
 .sample-holder {
-  width: 150px;
+  width: 220px;
   height: 120px;
   border: 1px solid pink;
+}
+
+.video-player {
+  width: 220px;
+  height: 120px;
 }
 
 .break {

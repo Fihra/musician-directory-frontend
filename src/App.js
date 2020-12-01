@@ -1,30 +1,28 @@
 import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import Search from './components/Search';
 import Dashboard from './components/Dashboard';
+import Home from './components/Home';
 
 const App = () => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
 
-  // const files = acceptedFiles.map(file => {
-
-  // })
-
   return (
-    <div className="App">
-      <h1>Musician Directory</h1>
-      {/* <form>
-        <input type="file" name="file"/>
-      </form> */}
-      {/* <section className="container">
-      <div {...getRootProps({className: 'dropzone'})}>
-        <input {...getInputProps()}/>
-        <p>Drag 'n drop some files here, or click to select files</p>
+    <Router>
+      <div className="App">
+        <div className="side-buttons">
+          <Link to="/"><button>Home</button></Link>
+          <Link><button>My Profile</button></Link>
+        </div>
+        <h1>Musician Directory</h1>
+        <Switch>
+          <Route exact path="/" render={props => <Home {...props}/>}/>
+          <Route path="/directory" render={props => <Dashboard {...props}/>}/>
+        </Switch>
+        
       </div>
-      </section> */}
-      <Search/>
-      <Dashboard/>
-    </div>
+    </Router>
   );
 }
 
