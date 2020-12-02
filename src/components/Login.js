@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import { useForm }  from 'react-hook-form';
 import axios from 'axios';
+import auth from './Auth';
 
-const Login = () => {
+const Login = (props) => {
     const { register, handleSubmit, watch, errors } = useForm();
 
     const onSubmit = (data) => {
         console.log(data);
+        checkLogin();
         
+    }
+
+    const checkLogin = () => {
+        auth.login(() => {
+            props.history.push("/directory")
+        })
     }
 
     return(
