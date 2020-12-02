@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Login from './Login';
+import Register from './Register';
 
 const Home = () => {
+    const [ isLogin, setIsLogin ] = useState(true);
+
     return(
-        <div>
-            <form>
-                <label>Email</label>
-                <input type="email"/>
-                <label>Password</label>
-                <input type="password"/>
-                <button type="submit">Confirm</button>
-            </form>
-            <button>Login</button>
-            <button>Register</button>
+        <div className="home-container">
+            {isLogin ? <Login/> : <Register/>}
+            
+            <button onClick={() => setIsLogin(true)}>Login</button>
+            <button onClick={() => setIsLogin(false)}>Register</button>
         </div>
     )
 }

@@ -37,6 +37,12 @@
   }
 }
 
+.home-container {
+  margin: 0 auto;
+  height: 500px;
+  width: 500px;
+}
+
 .side-buttons {
   position: absolute;
   height: 100px;
