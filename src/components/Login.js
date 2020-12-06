@@ -8,7 +8,13 @@ const Login = (props) => {
 
     const onSubmit = (data) => {
         console.log(data);
-        checkLogin();
+        axios.post("http://localhost:3001/musicians/login", {
+            email: data.email,
+            password: data.password
+        })
+        .then(resp => console.log(resp))
+        .catch(error => console.log(error))
+        // checkLogin();
         
     }
 
