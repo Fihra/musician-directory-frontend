@@ -12,13 +12,13 @@ const Login = (props) => {
             email: data.email,
             password: data.password
         })
-        .then(resp => console.log(resp))
+        .then(resp => checkLogin(resp))
         .catch(error => console.log(error))
-        // checkLogin();
-        
     }
 
-    const checkLogin = () => {
+    const checkLogin = (resp) => {
+        console.log(resp.data.musician);
+        localStorage.setItem('musician', JSON.stringify(resp.data.musician));
         auth.login(() => {
             props.history.push("/directory")
         })

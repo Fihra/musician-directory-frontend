@@ -20,7 +20,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" render={props => <Home {...props}/>}/>
           <Route exact path="/directory" render={props => {
-            if(Auth.isAuthenticated()){
+            if(Auth.isAuthenticated() && localStorage.getItem("musician") !== null){
               return <Dashboard {...props}/>
             } else {
               return <Redirect to={
