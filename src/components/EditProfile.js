@@ -2,7 +2,7 @@ import React from 'react';
 
 const EditProfile = () => {
     <div>
-        <h1>My Profile</h1>
+        <h1>Edit Profile</h1>
     </div>
 }
 

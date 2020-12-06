@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useForm }  from 'react-hook-form';
 import axios from 'axios';
 import auth from './Auth';
+import Button from '@material-ui/core/Button';
+import { FormControl } from '@material-ui/core';
 
 const Login = (props) => {
     const { register, handleSubmit, watch, errors } = useForm();
@@ -18,8 +20,9 @@ const Login = (props) => {
 
     const checkLogin = (resp) => {
         console.log(resp.data.musician);
-        localStorage.setItem('musician', JSON.stringify(resp.data.musician));
+        
         auth.login(() => {
+            localStorage.setItem('musician', JSON.stringify(resp.data.musician));
             props.history.push("/directory")
         })
     }
@@ -31,8 +34,8 @@ const Login = (props) => {
                 <input type="email" name="email" ref={register({ required: true})}/>
                 <label>Password</label>
                 <input type="password" name="password" ref={register({ required: true})}/>
-                <button type="submit">Confirm</button>
-                <button type="reset">Reset</button>
+                <Button type="submit">Confirm</Button>
+                <Button type="reset">Reset</Button>
             </form>
         </div>
     )

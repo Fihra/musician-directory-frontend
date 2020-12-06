@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
+import Button from '@material-ui/core/Button';
 
 const Home = (props) => {
     const [ isLogin, setIsLogin ] = useState(true);
@@ -9,8 +10,8 @@ const Home = (props) => {
         <div className="home-container">
             {isLogin ? <Login {...props}/> : <Register {...props}/>}
             
-            <button onClick={() => setIsLogin(true)}>Login</button>
-            <button onClick={() => setIsLogin(false)}>Register</button>
+            <Button variant="contained" onClick={() => setIsLogin(true)}>Login</Button>
+            <Button variant="contained" onClick={() => setIsLogin(false)}>Register</Button>
         </div>
     )
 }
