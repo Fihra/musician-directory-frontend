@@ -7,52 +7,85 @@ import SideButtons from './components/SideButtons';
 import EditProfile from './components/EditProfile';
 import Home from './components/Home';
 import Auth from './components/Auth';
+import { MusicianContext } from './components/MusicianContext';
+import React, { useEffect, useState} from 'react';
 
 const App = () => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  const [ musicianStorage, setMusicianStorage] = useState(null);
+  
+  useEffect(() => {
+    if(localStorage.getItem("musician") !== null){
+        setMusicianStorage(localStorage.getItem("musician"));
+    }
+  }, [musicianStorage])
+
+  /*
+  TODO: Implement UseReducer to manage LocalStorage
+  In order to change the SideButtons to view the right buttons
+  When a user is logged in and when there is not user logged in
+  */
+
 
   console.log(Auth.isAuthenticated())
-
+  console.log(musicianStorage)
   return (
-    <Router>
-      <div className="App">
-        <SideButtons/>
-        <h1>Musician Directory</h1>
-        <Switch>
-          <Route exact path="/" render={props => <Home {...props}/>}/>
-          <Route exact path="/directory" render={props => {
-              if(Auth.isAuthenticated() && localStorage.getItem("musician") !== null){
-                return <Dashboard {...props}/>
-              } else {
-                return <Redirect to={
-                  {
-                    pathname: "/",
-                    state: {
-                      from: props.location
-                    }
+    <MusicianContext.Provider value={{musicianStorage}}>
+      <Router>
+        <div className="App">
+          <SideButtons/>
+          <h1>Musician Directory</h1>
+          <Switch>
+            <Route exact path="/" render={props => {
+            if(localStorage.getItem("musician")){
+              return <Redirect to={
+                {
+                  pathname: "/directory",
+                  state: {
+                    from: props.location
                   }
-                }/>
-              }
+                }
+              }/>
+            } else {
+              return <Home {...props}/>
             }
-          }/>
-          <Route exact path="/edit-profile" render={props => {
-                if(Auth.isAuthenticated() && localStorage.getItem("musician" !== null)){
-                  return <EditProfile {...props}/>
+            
+          
+          }}/>
+            <Route exact path="/directory" render={props => {
+                if(localStorage.getItem("musician") !== null){
+                  return <Dashboard {...props}/>
                 } else {
                   return <Redirect to={
-                      {pathname: "/",
+                    {
+                      pathname: "/",
                       state: {
                         from: props.location
                       }
                     }
                   }/>
-                }   
+                }
               }
             }/>
-        </Switch>
-        
-      </div>
-    </Router>
+            <Route exact path="/edit-profile" render={props => {
+                  if(localStorage.getItem("musician") !== null){
+                    return <EditProfile {...props}/>
+                  } else {
+                    return <Redirect to={
+                        {pathname: "/",
+                        state: {
+                          from: props.location
+                        }
+                      }
+                    }/>
+                  }   
+                }
+              }/>
+          </Switch>
+          
+        </div>
+      </Router>
+    </MusicianContext.Provider>
   );
 }
 
