@@ -5,23 +5,28 @@ import Auth from './Auth';
 import Button from '@material-ui/core/Button';
 
 const SideButtons = () => {
-    const [musician, setMusician] = useState(null);
+    const [musician, setMusician] = useState(false);
     const { musicianStorage, setMusicianStorage } = useContext(MusicianContext);
 
     const logout = () => {
-        // setMusician(null)
+        setMusician(false)
         // setMusicianStorage(null);
         localStorage.clear();
 
     }
-    console.log(musicianStorage);
+
+    useEffect(() => {
+        if(musicianStorage){
+            setMusician(true);
+        } 
+
+    }, [musicianStorage])
+    
 
     return(
         <div className="side-buttons">
-            {/* {localStorage.getItem("musician") ?<Link to="/edit-profile"><button>My Profile</button></Link> : <Link to="/"><button>Home</button></Link>}
-            {localStorage.getItem("musician") ?<Link to="/"><button onClick={() => logout()}>Logout</button></Link> : <Link to="/"><button>Login/Register</button></Link>} */}
-            {musicianStorage ?<Link to="/edit-profile"><Button variant="contained">My Profile</Button></Link> : <Link to="/"><Button>Home</Button></Link>}
-            {musicianStorage ?<Link to="/"><Button variant="contained" onClick={() => logout()}>Logout</Button></Link> : null}
+            {musician ?<Link to="/edit-profile"><Button variant="contained">My Profile</Button></Link> : <Link to="/"><Button>Home</Button></Link>}
+            {musician ?<Link to="/"><Button variant="contained" onClick={() => logout()}>Logout</Button></Link> : null}
             
         </div>
     )

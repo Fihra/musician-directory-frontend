@@ -21,10 +21,8 @@ const Login = (props) => {
     const checkLogin = (resp) => {
         console.log(resp.data.musician);
         
-        auth.login(() => {
-            localStorage.setItem('musician', JSON.stringify(resp.data.musician));
-            props.history.push("/directory")
-        })
+        localStorage.setItem('musician', JSON.stringify(resp.data.musician));
+        props.history.push("/directory");
     }
 
     return(

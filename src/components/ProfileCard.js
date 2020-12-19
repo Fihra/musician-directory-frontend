@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import ReactPlayer from 'react-player';
 
 //Social Media Buttons
 import Youtube from '../assets/youtube.png';
@@ -74,6 +75,24 @@ const ProfileCard = (props) => {
 
     }
 
+    const showSample = () => {
+        console.log(details);
+        if((details === null) || (details.sample1 === "N/A")){
+            return(
+                <p>Sample #1</p>
+            )
+        } else {
+            console.log("hit for sample1")
+            return (
+                // <iframe className="video-player" src={details.sample1} title="sample 1"/>
+                // <p>Sample #111</p>
+                <ReactPlayer url={details.sample1}/>
+            )
+        }
+    }
+
+    console.log(details === null);
+
     return(
         <div className="profile-container">
             <div className="profile-image">
@@ -102,7 +121,8 @@ const ProfileCard = (props) => {
 
             <div className="samples">
                 <div className="sample-holder">
-                        {details === null ? "Sample #1" : <iframe className="video-player" src={details.sample1} title="sample 1"/>}
+                        {/* {details === null ? "Sample #1" : <iframe className="video-player" src={details.sample1} title="sample 1"/>} */}
+                        { showSample()}
                     </div>
                     <div className="sample-holder">
                         Sample #2

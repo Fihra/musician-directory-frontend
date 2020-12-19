@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProfileCard from './ProfileCard';
 import Search from './Search';
 import axios from 'axios';
+import { Actions } from './Actions';
+import { MusicianContext } from './MusicianContext';
 
 const Dashboard = () => {
     const [data, setData ] = useState({ musicians: []})
-    console.log(data);
+    const musicianContext = useContext(MusicianContext);
     
-    useEffect( () => {
-        getMusicians();
+    // useEffect( () => {
+    //     getMusicians();
+    //     musicianContext.musicianDispatch(Actions.FETCH_MUSICIANS);
         
-        
-    }, [])
+    // }, [musicianContext])
+    useEffect(() => {
+        console.log(musicianContext);
+    }, [musicianContext])
 
     // 'http://localhost:27017:/3001/musicians'
-    const getMusicians = () => {
-        axios.get('http://localhost:3001/musicians')
-        .then(response => setData({musicians: response.data}))
-        .catch(error => console.log(error))
-    }
+    // const getMusicians = () => {
+    //     axios.get('http://localhost:3001/musicians')
+    //     .then(response => setData({musicians: response.data}))
+    //     .catch(error => console.log(error))
+    // }
 
     const showMusicians = () => {
         return data.musicians.map((musician, i) => {

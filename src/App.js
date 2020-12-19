@@ -8,17 +8,39 @@ import EditProfile from './components/EditProfile';
 import Home from './components/Home';
 import Auth from './components/Auth';
 import { MusicianContext } from './components/MusicianContext';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useReducer} from 'react';
+import { Actions } from './components/Actions';
+import axios from 'axios';
+
+const initialState = {
+  allMusicians: "",
+  currentMusician: null,
+};
+
+const reducer = (state = initialState, action) => {
+  
+  switch(action.type){
+    case Actions.FETCH_MUSICIANS: 
+      return {
+        ...state,
+        allMusicians: action.payload
+      }
+    default:
+      return state;
+
+  }
+}
 
 const App = () => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-  const [ musicianStorage, setMusicianStorage] = useState(null);
+  const [musicianData, dispatch] = useReducer(reducer, initialState);
+  // const [ musicianStorage, setMusicianStorage] = useState(null);
   
-  useEffect(() => {
-    if(localStorage.getItem("musician") !== null){
-        setMusicianStorage(localStorage.getItem("musician"));
-    }
-  }, [musicianStorage])
+  // useEffect(() => {
+  //   if(localStorage.getItem("musician") !== null){
+  //       setMusicianStorage(localStorage.getItem("musician"));
+  //   }
+  // }, [musicianStorage])
 
   /*
   TODO: Implement UseReducer to manage LocalStorage
@@ -26,11 +48,19 @@ const App = () => {
   When a user is logged in and when there is not user logged in
   */
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/musicians')
+    .then(response => {
+      console.log(response)
+      dispatch({type: Actions.FETCH_MUSICIANS, payload: response.data})
+      console.log(initialState)
+    })
 
-  console.log(Auth.isAuthenticated())
-  console.log(musicianStorage)
+    .catch(error => console.log(error)) 
+  }, [])
+
   return (
-    <MusicianContext.Provider value={{musicianStorage}}>
+    <MusicianContext.Provider value={{musicianData: musicianData, musicianDispatch: dispatch}}>
       <Router>
         <div className="App">
           <SideButtons/>
