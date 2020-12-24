@@ -1,9 +1,11 @@
 import React from 'react';
 
 const EditProfile = () => {
-    <div>
-        <h1>Edit Profile</h1>
-    </div>
+    return(
+        <div>
+            <h2>Edit Profile</h2>
+        </div>
+    )
 }
 
 export default EditProfile;
