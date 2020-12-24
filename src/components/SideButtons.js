@@ -18,13 +18,13 @@ const SideButtons = () => {
     }
 
     useEffect(() => {
-        if(musicianData.currentMusician !== null){
+        if(localStorage.getItem("musician") !== null){
             setMusician(true);
         }
     }, [])
 
     useEffect(() => {
-        if(musicianData.currentMusician !== null){
+        if(localStorage.getItem("musician") !== null){
             setMusician(true);
         } 
 
