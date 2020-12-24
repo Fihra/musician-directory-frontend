@@ -53,7 +53,6 @@ const App = () => {
     .then(response => {
       console.log(response)
       dispatch({type: Actions.FETCH_MUSICIANS, payload: response.data})
-      console.log(initialState)
     })
 
     .catch(error => console.log(error)) 

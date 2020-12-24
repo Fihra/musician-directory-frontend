@@ -6,7 +6,7 @@ import { Actions } from './Actions';
 import { MusicianContext } from './MusicianContext';
 
 const Dashboard = () => {
-    const [data, setData ] = useState({ musicians: []})
+    const [data, setData ] = useState(null)
     const musicianContext = useContext(MusicianContext);
     
     // useEffect( () => {
@@ -15,7 +15,7 @@ const Dashboard = () => {
         
     // }, [musicianContext])
     useEffect(() => {
-        console.log(musicianContext);
+        setData(musicianContext.musicianData.allMusicians);
     }, [musicianContext])
 
     // 'http://localhost:27017:/3001/musicians'
@@ -26,16 +26,17 @@ const Dashboard = () => {
     // }
 
     const showMusicians = () => {
-        return data.musicians.map((musician, i) => {
-            return <ProfileCard key={i} musician={musician}/>
-        })
+            return data.map((musician, i) => {
+                return <ProfileCard key={i} musician={musician}/>
+            })
     }
-
+    console.log(data);
     return(
 
         <div className="dashboard-container">
             <Search/>
-            {showMusicians()}
+            {/* {data ? "data exists" : "data does not exist"} */}
+            {data ? showMusicians() : 'data does not exist'}
         </div>
     )
 }
