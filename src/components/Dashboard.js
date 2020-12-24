@@ -9,11 +9,6 @@ const Dashboard = () => {
     const [data, setData ] = useState(null)
     const musicianContext = useContext(MusicianContext);
     
-    // useEffect( () => {
-    //     getMusicians();
-    //     musicianContext.musicianDispatch(Actions.FETCH_MUSICIANS);
-        
-    // }, [musicianContext])
     useEffect(() => {
         setData(musicianContext.musicianData.allMusicians);
     }, [musicianContext])
@@ -35,7 +30,6 @@ const Dashboard = () => {
 
         <div className="dashboard-container">
             <Search/>
-            {/* {data ? "data exists" : "data does not exist"} */}
             {data ? showMusicians() : 'data does not exist'}
         </div>
     )

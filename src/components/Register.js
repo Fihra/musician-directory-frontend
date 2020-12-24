@@ -13,7 +13,6 @@ const Register = (props) => {
         .then(resp => console.log(resp))
         .catch(error => console.log(error))
         
-        
     }
 
     return(

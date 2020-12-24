@@ -61,7 +61,6 @@ const ProfileCard = (props) => {
             "Instagram": instagram,
             "Website": website
         })
-        console.log(details);
     }, [])
 
     const showSocialMedia = () => {
@@ -76,7 +75,6 @@ const ProfileCard = (props) => {
     }
 
     const showSample = () => {
-        console.log(details);
         if((details === null) || (details.sample1 === "N/A")){
             return(
                 <p>Sample #1</p>
@@ -90,8 +88,6 @@ const ProfileCard = (props) => {
             )
         }
     }
-
-    console.log(details === null);
 
     return(
         <div className="profile-container">

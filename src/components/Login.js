@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import { useForm }  from 'react-hook-form';
 import axios from 'axios';
 import auth from './Auth';
 import Button from '@material-ui/core/Button';
 import { FormControl } from '@material-ui/core';
+import { Actions } from './Actions';
+import { MusicianContext } from './MusicianContext';
 
 const Login = (props) => {
     const { register, handleSubmit, watch, errors } = useForm();
+    const {musicianData, musicianDispatch} = useContext(MusicianContext);
 
     const onSubmit = (data) => {
         console.log(data);
@@ -22,6 +25,9 @@ const Login = (props) => {
         console.log(resp.data.musician);
         
         localStorage.setItem('musician', JSON.stringify(resp.data.musician));
+        let session = localStorage.getItem("musician");
+        console.log(session);
+        musicianDispatch({type: Actions.CURRENT_MUSICIAN, payload: session})
         props.history.push("/directory");
     }
 

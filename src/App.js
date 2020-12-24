@@ -25,6 +25,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         allMusicians: action.payload
       }
+    case Actions.CURRENT_MUSICIAN:
+        return {
+          ...state,
+          currentMusician: action.payload
+        }
+    case Actions.LOGOUT:
+        return {
+          ...state,
+          currentMusician: null
+        }
     default:
       return state;
 
@@ -57,7 +67,7 @@ const App = () => {
 
     .catch(error => console.log(error)) 
   }, [])
-
+  console.log(initialState)
   return (
     <MusicianContext.Provider value={{musicianData: musicianData, musicianDispatch: dispatch}}>
       <Router>
