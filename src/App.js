@@ -67,6 +67,15 @@ const App = () => {
 
     .catch(error => console.log(error)) 
   }, [])
+
+
+  useEffect(() => {
+    if(localStorage.getItem("musician")){
+      let musicianSession = localStorage.getItem("musician");
+      dispatch({type: Actions.CURRENT_MUSICIAN, payload: musicianSession})
+    }
+  }, [])
+
   console.log(initialState)
   return (
     <MusicianContext.Provider value={{musicianData: musicianData, musicianDispatch: dispatch}}>
