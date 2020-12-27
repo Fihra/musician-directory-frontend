@@ -5,19 +5,19 @@ import { MusicianContext } from './MusicianContext';
 
 const listOfInstruments = {
     "idiophones": [
-        "Xylophone", "Marimba", "Vibraphone", "Glockenspiel", "Chimes"
+        "", "Xylophone", "Marimba", "Vibraphone", "Glockenspiel", "Chimes"
     ],
     "membranophones": [
-        "Drumkit", "Timpani", "Snare Drum", "Bass Drum", "Cymbal", "Woodblock", "Bodhran", "Bongos", 
+        "", "Drumkit", "Timpani", "Snare Drum", "Bass Drum", "Cymbal", "Woodblock", "Bodhran", "Bongos", 
     ],
     "chordophones": [
-        "Violin", "Viola", "Cello", "Double Bass", "Acoustic Guitar", "Harp", "Acoustic Bass Guitar", "Banjo", "Bouzouki"
+        "", "Violin", "Viola", "Cello", "Double Bass", "Acoustic Guitar", "Harp", "Acoustic Bass Guitar", "Banjo", "Bouzouki"
     ],
     "aerophones": [
-        "Piccolo", "Flute", "Oboe", "Clarinet", "Bass Clarinet", "Bassoon", "Soprano Saxophone", "Alto Saxophone", "Tenor Saxophone", "Baritone Saxophone", "Horn", "Cornet", "Trumpet", "Trombone", "Tuba", "Ocarina", "Recorder", "Pennywhistle"
+        "", "Piccolo", "Flute", "Oboe", "Clarinet", "Bass Clarinet", "Bassoon", "Soprano Saxophone", "Alto Saxophone", "Tenor Saxophone", "Baritone Saxophone", "Horn", "Cornet", "Trumpet", "Trombone", "Tuba", "Ocarina", "Recorder", "Pennywhistle"
     ],
     "electrophones": [
-        "Electric Guitar", "EWI", "Electric Bass Guitar", "Electric Violin", "Analog Synthesizer", 
+        "", "Electric Guitar", "EWI", "Electric Bass Guitar", "Electric Violin", "Analog Synthesizer", 
     ]
 }
 
@@ -36,13 +36,13 @@ const EditProfile = () => {
     }
 
     const selectInstruments = () => {
-        return Object.keys(listOfInstruments).map(classification => {
+        return Object.keys(listOfInstruments).map((classification, i) => {
             return(
-                <div>
+                <div key={i}> 
                 <label>{classification}</label>
-                    <select>
+                    <select onClick={(e) => addingInstrument(e)}>
                     {listOfInstruments[classification].map((instrument, k) => {
-                        return <option value={instrument}>{instrument}</option>
+                        return <option key={k} value={instrument}>{instrument}</option>
                     })}
                     </select>
                 </div>
@@ -51,11 +51,28 @@ const EditProfile = () => {
         })
     }
 
-    const populateInstruments = () => {
-        
+    const addingInstrument = (e) => {
+        if(e.target.value !== ""){
+            console.log(e.target.value)
+            if(!myInstruments.includes(e.target.value)){
+                setMyInstruments([...myInstruments, e.target.value])
+            }
+        }
     }
 
-    console.log(data);
+    const populateInstruments = () => {
+        return(
+            <div>
+                <ul>
+                    {myInstruments.map((instrument, i) => {
+                        return <li key={i}>{instrument}</li>
+                    })}
+                </ul>
+            </div>
+        )
+    }
+
+    console.log(myInstruments);
 
     return(
         <div>
@@ -63,7 +80,7 @@ const EditProfile = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label>Name</label>
-                    <input type="string" name="name" ref={register}/>
+                    <input type="string" name="name" ref={register} placeholder={data !== null && data.avatar !== "N/A" ? data.avatar : "name"}/>
                 </div>
                 <div>
                     <label>Alias</label>
@@ -71,7 +88,7 @@ const EditProfile = () => {
                 </div>
                 <div>
                     <label>Instruments</label>
-                    <input type="string" name="instruments" ref={register}/>
+                    {populateInstruments()}
                     {selectInstruments()}
 
                     
