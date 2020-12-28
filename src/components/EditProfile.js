@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useForm }  from 'react-hook-form';
+import { useForm, useFieldArray }  from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import { MusicianContext } from './MusicianContext';
 
@@ -22,7 +22,16 @@ const listOfInstruments = {
 }
 
 const EditProfile = () => {
-    const { register, handleSubmit, reset, setValue, getValues, errors, formState} = useForm();
+    const { register, control, handleSubmit, reset, setValue, getValues, errors, formState} = useForm({
+        defaultValues: {
+            instruments: [{instrumentName: "Piano"}]
+        }
+            
+    });
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "test"
+    })
     const musicianContext = useContext(MusicianContext);
     const [data, setData] = useState({});
     const [myInstruments, setMyInstruments] = useState([]);
@@ -52,10 +61,15 @@ const EditProfile = () => {
     }
 
     const addingInstrument = (e) => {
-        if(e.target.value !== ""){
-            console.log(e.target.value)
-            if(!myInstruments.includes(e.target.value)){
-                setMyInstruments([...myInstruments, e.target.value])
+        if(e.target.value !== ""){  
+            if(fields.length === 0){
+                append({instrumentName: e.target.value})
+                return;
+            }   
+            if(fields.some(instrument => instrument.instrumentName === e.target.value)){
+                console.log("instrument already exists")
+            } else {
+                append({instrumentName: e.target.value})
             }
         }
     }
@@ -63,16 +77,23 @@ const EditProfile = () => {
     const populateInstruments = () => {
         return(
             <div>
-                <ul>
+                {/* <ul name="allInstruments" ref={register}>
                     {myInstruments.map((instrument, i) => {
                         return <li key={i}>{instrument}</li>
+                    })}
+                </ul> */}
+                <ul>
+                    {fields.map((instrument, i) => {
+                        console.log(instrument)
+                        return <li key={i} name={`instruments[${i}]`} defaultValue={fields.value} ref={register}>{instrument.instrumentName}<button onClick={() => remove(i)}>X</button></li>
                     })}
                 </ul>
             </div>
         )
     }
 
-    console.log(myInstruments);
+    // console.log(myInstruments);
+    console.log(fields);
 
     return(
         <div>
