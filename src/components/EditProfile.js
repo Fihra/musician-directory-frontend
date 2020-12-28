@@ -77,23 +77,17 @@ const EditProfile = () => {
     const populateInstruments = () => {
         return(
             <div>
-                {/* <ul name="allInstruments" ref={register}>
-                    {myInstruments.map((instrument, i) => {
-                        return <li key={i}>{instrument}</li>
-                    })}
-                </ul> */}
                 <ul>
                     {fields.map((instrument, i) => {
-                        console.log(instrument)
-                        return <li key={i} name={`instruments[${i}]`} defaultValue={fields.value} ref={register}>{instrument.instrumentName}<button onClick={() => remove(i)}>X</button></li>
+                        // console.log(instrument)
+                        return <li key={i} name={`instruments[${i}].instrumentName`} defaultValue={fields.value} ref={register}>{instrument.instrumentName}<button onClick={() => remove(i)}>X</button></li>
                     })}
                 </ul>
             </div>
         )
     }
 
-    // console.log(myInstruments);
-    console.log(fields);
+    // console.log(fields);
 
     return(
         <div>
