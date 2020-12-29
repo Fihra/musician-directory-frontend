@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useForm, useFieldArray }  from 'react-hook-form';
+import { useForm, useFieldArray, Controller }  from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import { MusicianContext } from './MusicianContext';
 
@@ -22,15 +22,15 @@ const listOfInstruments = {
 }
 
 const EditProfile = () => {
-    const { register, control, handleSubmit, reset, setValue, getValues, errors, formState} = useForm({
-        defaultValues: {
-            instruments: [{instrumentName: "Piano"}]
-        }
-            
-    });
+    const { register, control, handleSubmit, reset, setValue, getValues, errors, formState} = useForm(
+        // {
+        // defaultValues: {
+        //     instruments: [{instrumentName: "Piano"}]
+        // }}
+    );
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "test"
+        name: "instruments"
     })
     const musicianContext = useContext(MusicianContext);
     const [data, setData] = useState({});
@@ -47,11 +47,11 @@ const EditProfile = () => {
     const selectInstruments = () => {
         return Object.keys(listOfInstruments).map((classification, i) => {
             return(
-                <div key={i}> 
+                <div key={i} > 
                 <label>{classification}</label>
-                    <select onClick={(e) => addingInstrument(e)}>
+                    <select onClick={(e) => addingInstrument(e)} >
                     {listOfInstruments[classification].map((instrument, k) => {
-                        return <option key={k} value={instrument}>{instrument}</option>
+                        return <option key={k} value={instrument} >{instrument}</option>
                     })}
                     </select>
                 </div>
@@ -79,8 +79,21 @@ const EditProfile = () => {
             <div>
                 <ul>
                     {fields.map((instrument, i) => {
-                        // console.log(instrument)
-                        return <li key={i} name={`instruments[${i}].instrumentName`} defaultValue={fields.value} ref={register}>{instrument.instrumentName}<button onClick={() => remove(i)}>X</button></li>
+                        console.log(instrument);
+                        return (
+                        <div key={instrument.id}>
+                            {instrument.instrumentName}
+                            <button onClick={() => remove(i)}>X</button>
+                            <Controller
+                                as={<li ref={register()} />}
+                                name={`instruments[${i}].instrumentName`}
+                                control={control}
+                                defaultValue={instrument.instrumentName}
+                            />
+                        
+                        </div>
+
+                        )
                     })}
                 </ul>
             </div>
@@ -95,11 +108,11 @@ const EditProfile = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label>Name</label>
-                    <input type="string" name="name" ref={register} placeholder={data !== null && data.avatar !== "N/A" ? data.avatar : "name"}/>
+                    <input type="string" name="name" ref={register()} placeholder={data !== null && data.avatar !== "N/A" ? data.avatar : "name"}/>
                 </div>
                 <div>
                     <label>Alias</label>
-                    <input type="string" name="alias" ref={register}/>
+                    <input type="string" name="alias" ref={register()}/>
                 </div>
                 <div>
                     <label>Instruments</label>
@@ -110,32 +123,32 @@ const EditProfile = () => {
                 </div>
                 <div>
                     <label>Voice Range</label>
-                    <input type="checkbox" name="soprano" ref={register}/>Soprano (C4-A6)
-                    <input type="checkbox" name="mezzoSoprano" ref={register}/>Mezzo-soprano (A3-F#5)
-                    <input type="checkbox" name="alto" ref={register}/>Alto (G3-E5)
-                    <input type="checkbox" name="tenor" ref={register}/>Tenor (C3-A4)
-                    <input type="checkbox" name="baritone" ref={register}/>Baritone (A2-F4)
-                    <input type="checkbox" name="bass" ref={register}/>Bass (F2-E4)
+                    <input type="checkbox" name="soprano" ref={register()}/>Soprano (C4-A6)
+                    <input type="checkbox" name="mezzoSoprano" ref={register()}/>Mezzo-soprano (A3-F#5)
+                    <input type="checkbox" name="alto" ref={register()}/>Alto (G3-E5)
+                    <input type="checkbox" name="tenor" ref={register()}/>Tenor (C3-A4)
+                    <input type="checkbox" name="baritone" ref={register()}/>Baritone (A2-F4)
+                    <input type="checkbox" name="bass" ref={register()}/>Bass (F2-E4)
                 </div>
                 <div>
                     <label>Audio Gear</label>
-                    <input type="string" name="audioGear" ref={register}/>
+                    <input type="string" name="audioGear" ref={register()}/>
                 </div>
                 <div>
                     <label>Production Skills</label>
-                    <input type="checkbox" name="arranging" ref={register}/>Arranging
-                    <input type="checkbox" name="engraving" ref={register}/>Engraving
-                    <input type="checkbox" name="lyricalWriting" ref={register}/>Lyrical Writing
-                    <input type="checkbox" name="mixing" ref={register}/>Mixing
-                    <input type="checkbox" name="mastering" ref={register}/>Mastering
-                    <input type="checkbox" name="transcribing" ref={register}/>Transcribing
-                    <input type="checkbox" name="translating" ref={register}/>Translating
-                    <input type="checkbox" name="soundDesign" ref={register}/>Sound Design
-                    <input type="checkbox" name="videoEditing" ref={register}/>Video Editing
+                    <input type="checkbox" name="arranging" ref={register()}/>Arranging
+                    <input type="checkbox" name="engraving" ref={register()}/>Engraving
+                    <input type="checkbox" name="lyricalWriting" ref={register()}/>Lyrical Writing
+                    <input type="checkbox" name="mixing" ref={register()}/>Mixing
+                    <input type="checkbox" name="mastering" ref={register()}/>Mastering
+                    <input type="checkbox" name="transcribing" ref={register()}/>Transcribing
+                    <input type="checkbox" name="translating" ref={register()}/>Translating
+                    <input type="checkbox" name="soundDesign" ref={register()}/>Sound Design
+                    <input type="checkbox" name="videoEditing" ref={register()}/>Video Editing
                 </div>
                 <div>
                     <label>Misc</label>
-                    <input type="string" name="misc" ref={register}/>
+                    <input type="string" name="misc" ref={register()}/>
                 </div>
 
                 <Button variant="contained" type="submit">Submit</Button>
