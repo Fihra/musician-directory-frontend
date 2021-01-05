@@ -61,12 +61,12 @@ const EditProfile = () => {
     }
 
     const addingInstrument = (e) => {
+        console.log(e.target.value);
         if(e.target.value !== ""){  
             if(fields.length === 0){
                 append({instrumentName: e.target.value})
                 return;
-            }   
-            if(fields.some(instrument => instrument.instrumentName === e.target.value)){
+            } else if(fields.some(instrument => instrument.instrumentName === e.target.value)){
                 console.log("instrument already exists")
             } else {
                 append({instrumentName: e.target.value})
@@ -75,21 +75,25 @@ const EditProfile = () => {
     }
 
     const populateInstruments = () => {
+        console.log(fields)
         return(
             <div>
                 <ul>
                     {fields.map((instrument, i) => {
                         console.log(instrument);
                         return (
-                        <div key={instrument.id}>
-                            {instrument.instrumentName}
-                            <button onClick={() => remove(i)}>X</button>
-                            <Controller
-                                as={<li ref={register()} />}
+                        <div key={instrument.id} >
+                            
+                            {/* <button onClick={(i) => {if(fields.length > 1) { remove(i)}}}>X</button> */}
+                            {/* <button onClick={() => removeInstrument(instrument, i)}>X</button> */}
+                            <Controller 
+                                as={<span ref={register()}/>}
                                 name={`instruments[${i}].instrumentName`}
                                 control={control}
                                 defaultValue={instrument.instrumentName}
                             />
+                            {instrument.instrumentName}
+                            <button onClick={() => remove(i)}>Delete</button>
                         
                         </div>
 
@@ -99,8 +103,6 @@ const EditProfile = () => {
             </div>
         )
     }
-
-    // console.log(fields);
 
     return(
         <div>
@@ -118,8 +120,7 @@ const EditProfile = () => {
                     <label>Instruments</label>
                     {populateInstruments()}
                     {selectInstruments()}
-
-                    
+                 
                 </div>
                 <div>
                     <label>Voice Range</label>
